@@ -8,9 +8,9 @@ const cors = require('cors')
 
 //app and inbuit middleware
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use('/api',userRouter);
-app.use(cors())
 
 //home route or main route
 app.get("/", (req, res) => {
