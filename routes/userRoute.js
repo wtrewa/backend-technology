@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const json = require("jsonwebtoken");
 const blackList = require("../blackList");
+const auth = require("../middleware/auth");
 const secretKey = process.env.SECRET_KEY;
 
 //create route for user.
@@ -72,6 +73,24 @@ userRouter.get("/logout", async (req, res) => {
     res.send(error.message).status(500);
   }
 });
+
+//update user for cartPage
+userRouter.patch('/user/:id',auth,async(req,res)=>{
+    try {
+      const {id} = req.params;
+      const obj = req.body;
+      const users = await userModel.findById(id)
+      let {cartProducts} = users;
+      cartProducts.push(obj)
+      console.log(cartProducts)
+      const updatedcart = await userModel.findByIdAndUpdate(id,{cartProducts},{new:true})
+      console.log(updatedcart)
+      res.send({msg:"product added to the cart"})
+    } catch (error) {
+      res.send(error.message).status(500)
+    }
+})
+
 
 //module exporter
 module.exports = { userRouter };
