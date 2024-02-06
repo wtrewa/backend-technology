@@ -55,7 +55,7 @@ userRouter.post("/login", async (req, res) => {
       `${secretKey}`
     );
 
-    return res.status(200).send({ msg: "Login Successfull", token });
+    return res.status(200).send({ msg: "Login Successfull", token,data:preUser });
     
   } catch (error) {
     return res.status(400).send(error.message);
