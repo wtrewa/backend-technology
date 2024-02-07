@@ -85,7 +85,7 @@ userRouter.patch('/user/:id',auth,async(req,res)=>{
       console.log(cartProducts)
       const updatedcart = await userModel.findByIdAndUpdate(id,{cartProducts},{new:true})
       console.log(updatedcart)
-      res.send({msg:"product added to the cart",user:cartProducts})
+      res.send({msg:"product added to the cart",user:updatedcart})
     } catch (error) {
       res.send(error.message).status(500)
     }
